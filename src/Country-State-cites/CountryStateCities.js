@@ -64,12 +64,13 @@ function CountryStateCities() {
   return (
     <>
       <div className='wapper'>
-        <h1><span className='first'>Globe</span><span className='second'>Mapper</span></h1>
+  
+          <h1><span className='first'>Globe</span><span className='second'>Mapper</span></h1>
+
         <div className='total'>
 
-
           <select defaultValue={"select Country"} onChange={(e) => { setSelectCountry(e.target.value) }}>
-            <option selected value=" select Country" disabled >Select Country</option>
+            <option  style={{backgroundColor:"gray",color:"black"}}selected value=" select Country" disabled >Select Country</option>
             {
               countries.map((country) => {
                 return <option value={country.iso2} >
@@ -84,7 +85,13 @@ function CountryStateCities() {
             <option value="Select State" selected disabled>Select state</option>
             {
               states.map((state) => {
-                return <option value={state.iso2}>{state.name}</option>
+                if (states.length > 0) {
+                  return <option value={state.iso2}>{state.name}</option>
+                }
+                else {
+                  return <option value="NotFound">Not Found</option>
+                }
+
               })
             }
           </select>
