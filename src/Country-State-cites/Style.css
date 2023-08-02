@@ -32,14 +32,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     padding: 40px 0px 200px;
 
 
 }
 .total select {
-    margin: 0px 6px;
+    margin: 10px 6px;
     font-size: 18px;
     border-radius: 15px;
     padding: 5px 20px;
 
+}
+@media all and (max-width:450px){
+    .total select {
+    font-size:16px;
+    padding: 5px 10px;
+    
+ }
+ .wapper h1{
+    font-size: 45px;
+ }
+}
+@media all and (max-width:370px){
+    .total select {
+        font-size: 12px;
+    }
 }
