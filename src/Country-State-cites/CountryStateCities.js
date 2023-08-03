@@ -8,7 +8,8 @@ function CountryStateCities() {
   const [cites, setCites] = useState([])
   const [selectState, setSelectState] = useState("")
   const [selectCountry, setSelectCountry] = useState("")
-
+  const [selectCity, setSelectCity] = useState("")
+  const [image, setImage] = useState({})
   useEffect(() => {
     axios.get('https://api.countrystatecity.in/v1/countries',
       {
@@ -54,23 +55,32 @@ function CountryStateCities() {
         })
     }
   }, [selectState])
+  useEffect(() => {
+    axios.get(`https://api.teleport.org/api/cities/?search=${selectCity}`)
+    .then((result)=>{
+      console.log(result.data)
+      setImage(result.data)
+    })
+  },[selectCity])
   console.log(selectState)
 
   console.log(states)
   // console.log(countries)
+  console.log(cites)
+  console.log(image)
 
   console.log(selectCountry)
 
   return (
     <>
       <div className='wapper'>
-  
-          <h1><span className='first'>Globe</span><span className='second'>Mapper</span></h1>
+
+        <h1><span className='first'>Globe</span><span className='second'>Mapper</span></h1>
 
         <div className='total'>
 
           <select defaultValue={"select Country"} onChange={(e) => { setSelectCountry(e.target.value) }}>
-            <option  style={{backgroundColor:"gray",color:"black"}}selected value=" select Country" disabled >Select Country</option>
+            <option style={{ backgroundColor: "gray", color: "black" }} selected value=" select Country" disabled >Select Country</option>
             {
               countries.map((country) => {
                 return <option value={country.iso2} >
@@ -97,15 +107,18 @@ function CountryStateCities() {
           </select>
 
 
-          <select defaultValue={"Select Value"}>
+          <select defaultValue={"Select Value"} onChange={(e)=>setSelectCity(e.target.value)}>
             <option selected disabled value={"Select value "}>Select City</option>
             {
               cites.map((city) => {
-                return <option value={city.iso2}>{city.name}</option>
+                return <option value={city.name}>{city.name}</option>
               })
             }
           </select>
 
+        </div>
+        <div className='cityImages'>
+          <img src={image._links.curies[0].href} alt='images'></img>
         </div>
       </div>
 
