@@ -55,13 +55,13 @@ function CountryStateCities() {
         })
     }
   }, [selectState])
-  useEffect(() => {
-    axios.get(`https://api.teleport.org/api/cities/?search=${selectCity}`)
-    .then((result)=>{
-      console.log(result.data)
-      setImage(result.data)
-    })
-  },[selectCity])
+  // useEffect(() => {
+  //   axios.get(` https://api.teleport.org/api/urban_areas/slug:${selectCity}/images/`)
+  //     .then((result) => {
+  //       console.log(result.data)
+  //       setImage(result.data)
+  //     })
+  // }, [selectCity])
   console.log(selectState)
 
   console.log(states)
@@ -80,7 +80,7 @@ function CountryStateCities() {
         <div className='total'>
 
           <select defaultValue={"select Country"} onChange={(e) => { setSelectCountry(e.target.value) }}>
-            <option style={{ backgroundColor: "gray", color: "black" }} selected value=" select Country" disabled >Select Country</option>
+            <option style={{ backgroundColor: "gray", color: "white" }} selected value=" select Country" disabled >Select Country</option>
             {
               countries.map((country) => {
                 return <option value={country.iso2} >
@@ -95,7 +95,7 @@ function CountryStateCities() {
             <option value="Select State" selected disabled>Select state</option>
             {
               states.map((state) => {
-                if (states.length > 0) {
+                if (selectCountry.length > 0) {
                   return <option value={state.iso2}>{state.name}</option>
                 }
                 else {
@@ -107,18 +107,21 @@ function CountryStateCities() {
           </select>
 
 
-          <select defaultValue={"Select Value"} onChange={(e)=>setSelectCity(e.target.value)}>
+          <select defaultValue={"Select Value"} onChange={(e) => setSelectCity(e.target.value)}>
             <option selected disabled value={"Select value "}>Select City</option>
             {
               cites.map((city) => {
-                return <option value={city.name}>{city.name}</option>
+                if (selectCountry.length > 0 && selectState.length > 0) {
+                  return <option value={city.name}>{city.name}</option>
+                }
+
               })
             }
           </select>
 
         </div>
         <div className='cityImages'>
-          <img src={image._links.curies[0].href} alt='images'></img>
+          {/* <img src={image._links.curies[0].href} alt='images'></img> */}
         </div>
       </div>
 
